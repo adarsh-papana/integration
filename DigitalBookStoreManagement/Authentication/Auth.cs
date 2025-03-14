@@ -21,9 +21,9 @@ namespace DigitalBookStoreManagement.Authentication
             public string Authentication(string email, string password)
             {
                 var user = _userContext.Users.SingleOrDefault(u => u.Email == email && u.Password == password);
-                if (user == null)
+                if (user == null || user.Email!=email || user.Password!=password)
                 {
-                    return null;
+                    return "invalid credential";
                 }
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var tokenKey = Encoding.ASCII.GetBytes(key);

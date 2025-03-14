@@ -28,11 +28,21 @@ namespace DigitalBookStoreManagement.Service
         //Insert user 
         public int AddUser(User userInfo)
         {
-            if (repo.GetUserInfo(userInfo.UserID) != null)
+            try
             {
-                throw new UserAlreadyExistsExpection($"The user already exists");
+                if (repo.GetUserInfo(userInfo.UserID) != null)
+                {
+                    throw new UserAlreadyExistsExpection($"The user already exists");
+                }
+                return repo.AddUser(userInfo);
             }
-            return repo.AddUser(userInfo);
+            catch (UserAlreadyExistsExpection ex)
+            {
+                // Handle the specific exception
+                Console.WriteLine(ex.Message);
+                // You can return a specific value or rethrow the exception as needed
+                throw;
+            }
         }
 
         //Delete User

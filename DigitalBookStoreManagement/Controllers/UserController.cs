@@ -40,7 +40,7 @@ namespace DigitalBookStoreManagement.Controllers
         }
 
         //Insert the data in the data 
-
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Post(User userInfo)
         {
@@ -56,6 +56,7 @@ namespace DigitalBookStoreManagement.Controllers
         //}
 
         //Update the record
+        [AllowAnonymous]
         [HttpPut]
         [Route("{id}")]
         public ActionResult Put(int id, User userInfo)

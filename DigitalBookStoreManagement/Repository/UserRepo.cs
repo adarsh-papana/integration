@@ -18,6 +18,7 @@ namespace DigitalBookStoreManagement.Repository
 
         public User GetUserInfo(int id)
         {
+            
             return context.Users.FirstOrDefault(x => x.UserID == id);
         }
 
@@ -41,8 +42,7 @@ namespace DigitalBookStoreManagement.Repository
             UI.Name = userInfo.Name;
             UI.Email = userInfo.Email;
             UI.Password = userInfo.Password;
-            UI.ConfirmPassword = userInfo.ConfirmPassword;
-            UI.Address = userInfo.Address;
+            //UI.ConfirmPassword = userInfo.ConfirmPassword;
             UI.Role = userInfo.Role;
             context.Entry<User>(UI).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             return context.SaveChanges();
