@@ -94,14 +94,17 @@ namespace DigitalBookstoreManagement.Repository
                     await _context.SaveChangesAsync();
 
                     // 🔔 Send Email Notification if stock is below NotifyLimit
-                    if (inventory.Quantity < inventory.NotifyLimit)
+                    if (inventory.Quantity <= inventory.NotifyLimit && inventory.Quantity > 0)
                     {
-                        string message = $"The book containing in Inventory {inventory.InventoryID} with BookID {book.BookID} of '{book.Title}' is less than the notify limit. Kindly re-stock the book.";
-                        await _notificationRepository.AddNotification(message);
+                        await _notificationRepository.AddorUpdateNotificationAsync(bookId, book.Title, inventory.InventoryID, inventory.NotifyLimit);
+                    }
+
+                    else if (inventory.Quantity == 0)
+                    {
+                        string message = $"The book containing in Inventory {inventory.InventoryID} with BookID {book.BookID} of '{book.Title}' is out of stock. Kindly re-stock the book.";
+                        await _notificationRepository.AddNotificationAsync(message);
                         Console.WriteLine($"ALERT: {message}");
-                        // TODO: Implement Email Notification
-                        //Console.WriteLine($"ALERT: Inventory {inventory.InventoryID}, BookID {book.BookID}, Book {book.Title} is running low on stock! Current Quantity {inventory.Quantity}");
-                    } 
+                    }
                 }
             }
         }
