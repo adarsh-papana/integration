@@ -36,6 +36,7 @@ namespace DigitalBookstoreManagement.Repository
         {
             _context.Inventories.Add(inventory);
             await _context.SaveChangesAsync();
+            await CheckStockAndNotifyAdminAsync(inventory.BookID);
             return inventory;
         }
 
@@ -54,6 +55,9 @@ namespace DigitalBookstoreManagement.Repository
                 _context.Inventories.Remove(inventory);
                 await _context.SaveChangesAsync();
             }
+
+            var maxId = await _context.Inventories.MaxAsync(i => (int?)i.InventoryID) ?? 0;
+            await _context.Database.ExecuteSqlRawAsync($"DBCC CHECKIDENT('Inventories', RESEED, {maxId})");
         }
 
         public async Task<bool> IsStockAvailableAsync(int bookId, int quantity)

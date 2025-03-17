@@ -38,9 +38,9 @@ namespace DigitalBookStoreManagement.Service
             return await _repository.GetBooksByCategoryNameAsync(categoryName);
         }
 
-        public async Task AddBookAsync(BookManagement book)
+        public async Task<BookManagement> AddBookAsync(BookManagement book)
         {
-            await _repository.AddBookAsync(book);
+            return await _repository.AddBookAsync(book);
         }
 
         public async Task UpdateBookAsync(BookManagement book)
@@ -52,21 +52,5 @@ namespace DigitalBookStoreManagement.Service
         {
             await _repository.DeleteBookAsync(bookId);
         }
-
-
-
-
-
-
-
-        //private string GetStockAvailability(int quantity)
-        //{
-        //    if (quantity == 0)
-        //        return "Not Available";
-        //    else if (quantity < 5)
-        //        return "Only a few books are left";
-        //    else
-        //        return "Available";
-        //}
     }
 }

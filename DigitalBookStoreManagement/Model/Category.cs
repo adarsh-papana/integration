@@ -5,7 +5,7 @@ namespace DigitalBookStoreManagement.Model
 {
     public class Category
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [StringLength(50, ErrorMessage = "CategoryID cannot exceed 50 characters")]
         public string CategoryID { get; set; }
         [Required]

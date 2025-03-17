@@ -1,4 +1,5 @@
-﻿using DigitalBookStoreManagement.Authentication;
+﻿using DigitalBookstoreManagement.Models;
+using DigitalBookStoreManagement.Authentication;
 using DigitalBookStoreManagement.Model;
 using DigitalBookStoreManagement.Service;
 using Microsoft.AspNetCore.Authorization;
@@ -55,15 +56,23 @@ namespace DigitalBookStoreManagement.Controllers
         // ✅ 4. Add new inventory
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<ActionResult<Inventory>> AddInventory([FromBody] Inventory inventory)
+        public async Task<ActionResult<Inventory>> AddInventory([FromBody] InventoryDTO inventoryDto)
         {
-            if (inventory == null)
+            if (inventoryDto == null)
                 return BadRequest("Invalid inventory data.");
+
+            var inventory = new Inventory
+            {
+                BookID = inventoryDto.BookID,
+                Quantity = inventoryDto.Quantity,
+                NotifyLimit = inventoryDto.NotifyLimit,
+            };
 
             //  inventory.Book = null;
 
             await _inventoryService.AddInventoryAsync(inventory);
-            return CreatedAtAction(nameof(GetInventoryById), new { id = inventory.InventoryID }, inventory);
+            //return CreatedAtAction(nameof(GetInventoryById), new { id = inventory.InventoryID }, inventory);
+            return Ok("Inventory added successfully.");
         }
 
         // ✅ 5. Update inventory
@@ -77,7 +86,7 @@ namespace DigitalBookStoreManagement.Controllers
             //  inventory.Book = null;
 
             await _inventoryService.UpdateInventoryAsync(inventory);
-            return NoContent();
+            return Ok("Inventory updated succesfully.");
         }
 
         //Add Stock in Inventory
