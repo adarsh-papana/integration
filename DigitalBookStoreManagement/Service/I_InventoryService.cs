@@ -13,5 +13,6 @@ namespace DigitalBookStoreManagement.Service
         public Task CheckStockAndNotifyAdminAsync(int bookId);
         public Task<bool> IsStockAvailableAsync(int bookId, int quantity);
         public Task UpdateStockOnOrderAsync(int bookId, int orderedQuantity);
+        public Task<bool> AddStockAsync(int bookId, int quantity);
     }
 }

@@ -80,6 +80,21 @@ namespace DigitalBookStoreManagement.Controllers
             return NoContent();
         }
 
+        //Add Stock in Inventory
+        [HttpPost("add-stock")]
+        public async Task<IActionResult> AddStock(int bookId, int quantity)
+        {
+            bool success = await _inventoryService.AddStockAsync(bookId, quantity);
+            //bool isAvailable = await _inventoryService.IsStockAvailableAsync(bookId, quantity);
+
+            if (!success)
+            {
+                return BadRequest("Stock update failed. Inventory item not found.");
+            }
+
+            return Ok("Stock added successfully.");
+        }
+
         // ✅ 6. Delete inventory
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInventory(int id)

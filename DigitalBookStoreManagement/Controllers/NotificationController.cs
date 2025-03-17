@@ -18,7 +18,7 @@ namespace DigitalBookStoreManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllNotifications()
         {
-            var notifications = await _notificationRepository.GetAllNotifications();
+            var notifications = await _notificationRepository.GetAllNotificationsAsync();
             return Ok(notifications);
         }
     }

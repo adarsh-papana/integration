@@ -76,5 +76,11 @@ namespace DigitalBookstoreManagement.Services
                 await CheckStockAndNotifyAdminAsync(bookId); // Check stock after updating
             }
         }
+
+        public async Task<bool> AddStockAsync(int bookId, int quantity)
+        {
+            var inventory = await _inventoryRepository.AddStockAsync(bookId, quantity);
+            return (inventory);
+        }
     }
 }

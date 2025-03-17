@@ -108,5 +108,21 @@ namespace DigitalBookstoreManagement.Repository
                 }
             }
         }
+
+        public async Task<bool> AddStockAsync(int bookId, int quantity)
+        {
+            var inventory = await _context.Inventories.FirstOrDefaultAsync(i => i.BookID == bookId);
+
+            if (inventory == null)
+            {
+                return false;
+            }
+            inventory.Quantity += quantity;
+            await _context.SaveChangesAsync();
+
+            await CheckStockAndNotifyAdminAsync(bookId);
+
+            return true;
+        }
     }
 }
