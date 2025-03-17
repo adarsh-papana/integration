@@ -87,11 +87,16 @@ namespace DigitalBookStoreManagement.Repository
         public async Task DeleteBookAsync(int bookId)
         {
             var book = await _context.Books.FindAsync(bookId);
-            if (book != null)
+
+            if (book == null)
+            {
+                throw new KeyNotFoundException($"Book with BookID {bookId} not found.");
+            }
+
+            else if (book != null)
             {
                 _context.Books.Remove(book);
                 await _context.SaveChangesAsync();
-
             }
         }
     }
