@@ -59,14 +59,14 @@ namespace DigitalBookStoreManagement.Repository
 
         public async Task<BookManagement> AddBookAsync(BookManagement book)
         {
-            var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.AuthorID == book.Author.AuthorID);
+            var existingAuthor = await _context.Authors.FirstOrDefaultAsync(a => a.AuthorName == book.Author.AuthorName);
             if (existingAuthor != null)
             {
                 book.AuthorID = existingAuthor.AuthorID;
                 book.Author = null;
             }
 
-            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryID == book.Category.CategoryID);
+            var existingCategory = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryName == book.Category.CategoryName);
             if (existingCategory != null)
             {
                 book.CategoryID = existingCategory.CategoryID;

@@ -14,7 +14,6 @@ namespace DigitalBookStoreManagement.Model
 
             public DbSet<User> Users { get; set; }
             public DbSet<Inventory> Inventories { get; set; }
-            //public DbSet<Book> Books { get; set; }
 
             public DbSet<Notification> Notifications { get; set; }
 
