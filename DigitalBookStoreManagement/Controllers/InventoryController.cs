@@ -35,9 +35,6 @@ namespace DigitalBookStoreManagement.Controllers
         public async Task<ActionResult<Inventory>> GetInventoryById(int id)
         {
             var inventory = await _inventoryService.GetInventoryByIdAsync(id);
-            if (inventory == null)
-                return NotFound($"Inventory with ID {id} not found.");
-
             return Ok(inventory);
         }
 
@@ -47,9 +44,6 @@ namespace DigitalBookStoreManagement.Controllers
         public async Task<ActionResult<Inventory>> GetInventoryByBookId(int bookId)
         {
             var inventory = await _inventoryService.GetInventoryByBookIdAsync(bookId);
-            if (inventory == null)
-                return NotFound($"Inventory for BookID {bookId} not found.");
-
             return Ok(inventory);
         }
 
@@ -113,7 +107,7 @@ namespace DigitalBookStoreManagement.Controllers
                 return NotFound("Inventory not found!");
 
             await _inventoryService.DeleteInventoryAsync(id);
-            return NoContent();
+            return Ok($"Inventory {id} deleted successfully.");
         }
 
         [HttpPut("update-stock")]
